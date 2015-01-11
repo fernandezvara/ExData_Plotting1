@@ -32,11 +32,29 @@ cols<-c('Date',
         'SubMetering3')
 colnames(power_data_subset)<-cols
 
-png(filename='plot3.png',
+png(filename='plot4.png',
     width=480,
     height=480,
     units='px')
 
+# split 2x2 the plot
+par(mfrow=c(2,2))
+
+# coord 1,1 plot
+plot(dmy(power_data_subset$Date)+hms(power_data_subset$Time),
+     power_data_subset$GlobalActivePower,
+     ylab='Global Active Power',
+     xlab='',
+     type='l')
+
+# coord 1,2 plot
+plot(dmy(power_data_subset$Date)+hms(power_data_subset$Time),
+     power_data_subset$Voltage,
+     ylab='Voltage',
+     xlab='datetime',
+     type='l')
+
+# coord 2,1 plot
 lines_colors <- c('black','red','blue')
 lines_labels <- c('Sub_metering_1','Sub_metering_2','Sub_metering_3')
 
@@ -55,7 +73,15 @@ lines(dmy(power_data_subset$Date)+hms(power_data_subset$Time),
 legend('topright',
        legend=lines_labels,
        col=lines_colors,
-       lty='solid')
+       lty='solid',
+       bty="n")
+
+# coord 2,2 plot
+plot(dmy(power_data_subset$Date)+hms(power_data_subset$Time),
+     power_data_subset$GlobalReactivePower,
+     ylab='Global_reactive_power',
+     xlab='datetime',
+     type='l')
 
 # dev.off
 x<-dev.off()
